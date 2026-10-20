@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>USBAlias privacy policy</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           max-width: 42rem; margin: 4rem auto; padding: 0 1.25rem; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.2rem; margin-top: 2.25rem; }
+    code { background: rgba(127,127,127,.15); padding: .1em .3em; border-radius: 3px; }
+    footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
+  </style>
+</head>
+<body>
+  <h1>USBAlias privacy policy</h1>
+  <p>Last updated: 19 October 2026.</p>
+
+  <p>USBAlias does not collect, store, transmit or share any personal data.</p>
+
+  <h2>What the app accesses, and why</h2>
+  <ul>
+    <li><strong>USB serial devices.</strong> USBAlias asks macOS which USB serial
+        devices are attached so it can match them against the rules you create.
+        It reads device names (product, manufacturer, serial number) and the
+        device path such as <code>/dev/cu.usbmodem1234</code>. It never opens,
+        reads or writes data on the serial device itself.</li>
+    <li><strong>Files you choose.</strong> If you pick an aliases folder, or a
+        custom sound file, USBAlias remembers that choice so it can keep working
+        after a restart. The app only writes inside the aliases folder you
+        choose, and it only reads sound files you choose.</li>
+    <li><strong>Application preferences.</strong> Rules, sounds and settings are
+        stored locally in the app's own data folder
+        (<code>~/Library/Application Support/USB Alias/</code>, inside the app's
+        sandbox container for the App Store version). They stay on your Mac.
+        Deleting the app and that folder removes them.</li>
+  </ul>
+
+  <h2>What the app does not do</h2>
+  <ul>
+    <li>No network connections, no analytics, no crash reporting, no advertising.</li>
+    <li>No account, sign-in or identifier of any kind.</li>
+    <li>No access to your contacts, calendar, photos, location, microphone,
+        camera or browsing data.</li>
+    <li>No third-party SDKs.</li>
+  </ul>
+
+  <h2>Notifications</h2>
+  <p>If you turn on notifications, macOS asks for permission and shows the
+     alerts locally. No notification content leaves your Mac.</p>
+
+  <h2>Sharing</h2>
+  <p>Nothing is shared with anyone, including the developer.</p>
+
+  <h2>Children</h2>
+  <p>The app is a developer tool and is not directed at children.</p>
+
+  <h2>Changes</h2>
+  <p>If a future version changes any of the above, this policy will be updated
+     before that version is released.</p>
+
+  <h2>Contact</h2>
+  <p><a href="mailto:ox141jf@gmail.com">ox141jf@gmail.com</a></p>
+
+  <footer>Copyright 2026 Jared Reabow.</footer>
+</body>
+</html>

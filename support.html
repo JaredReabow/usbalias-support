@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>USBAlias support</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           max-width: 42rem; margin: 4rem auto; padding: 0 1.25rem; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.2rem; margin-top: 2.25rem; }
+    dt { font-weight: 600; margin-top: 1.25rem; }
+    dd { margin: .35rem 0 0; }
+    code { background: rgba(127,127,127,.15); padding: .1em .3em; border-radius: 3px; }
+    footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
+  </style>
+</head>
+<body>
+  <h1>USBAlias support</h1>
+  <p>USBAlias watches for USB serial devices and keeps a stable name (a symbolic
+     link) pointing at whichever <code>/dev/cu.*</code> path a device currently
+     has, so scripts and tools stop chasing changing device names.</p>
+
+  <h2>Requirements</h2>
+  <p>macOS 26.5 or later. The app is a menu bar utility with no main window; open
+     Settings from the menu bar icon (or press Cmd-,).</p>
+
+  <h2>Common questions</h2>
+  <dl>
+    <dt>Where do my aliases live?</dt>
+    <dd>Settings → General → Aliases shows the folder. If you have not chosen
+        one, each rule keeps its own folder (older rules point at <code>/tmp</code>).</dd>
+
+    <dt>Why did my <code>/tmp/...</code> path stop working?</dt>
+    <dd>Store versions of the app are sandboxed and cannot write to
+        <code>/tmp</code>, so aliases move to the folder you choose.
+        Settings → General → Aliases can generate a small script that recreates
+        the old <code>/tmp</code> paths as links to the new folder if you have
+        scripts that still expect them.</dd>
+
+    <dt>How do I match a device reliably?</dt>
+    <dd>Add a rule and, in the device picker, choose the attached device; the app
+        fills in product, manufacturer and serial number. Matching on serial
+        number is the most precise.</dd>
+
+    <dt>Do I need to keep the app running?</dt>
+    <dd>Yes — it maintains the links while it runs. Turn on "Launch at Login" in
+        Settings → General so it starts with your Mac.</dd>
+
+    <dt>Notifications or sounds are not appearing.</dt>
+    <dd>Check the toggles in Settings → General, and macOS System Settings →
+        Notifications → USBAlias if you use notifications.</dd>
+
+    <dt>How do I see what the app is doing?</dt>
+    <dd>Settings → Log shows a live log of device connections, rule matching and
+        link creation, with copyable text.</dd>
+
+    <dt>Does the app need network access?</dt>
+    <dd>No. It makes no network connections, has no account and collects no data.
+        See the <a href="privacy.html">privacy policy</a>.</dd>
+  </dl>
+
+  <h2>Contact</h2>
+  <p><a href="mailto:ox141jf@gmail.com">ox141jf@gmail.com</a></p>
+
+  <footer>Copyright 2026 Jared Reabow.</footer>
+</body>
+</html>
