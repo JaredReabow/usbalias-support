@@ -3,26 +3,407 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>USBAlias</title>
-  <style>
-    :root { color-scheme: light dark; }
-    body { font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-           max-width: 42rem; margin: 4rem auto; padding: 0 1.25rem; }
-    h1 { font-size: 1.9rem; margin-bottom: .25rem; }
-    p { margin: .75rem 0; }
-    nav a { margin-right: 1rem; }
-    footer { margin-top: 3rem; font-size: .85rem; opacity: .7; }
-  </style>
+  <title>USBAlias - Stable names for USB serial devices on macOS</title>
+  <meta name="description" content="USBAlias gives Arduino, ESP32, RP2040 and other USB serial devices a stable macOS path. Match once, then keep using the same alias in every tool.">
+  <link rel="canonical" href="https://usbalias.com/">
+  <link rel="icon" href="assets/usbalias-icon.png" type="image/png">
+  <link rel="stylesheet" href="assets/site.css">
+  <meta name="theme-color" content="#071c27">
+  <meta property="og:title" content="USBAlias - Stop chasing /dev/cu.*">
+  <meta property="og:description" content="Stable names for USB serial devices on macOS. Available now on the Mac App Store.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://usbalias.com/">
+  <meta property="og:image" content="https://usbalias.com/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="USBAlias - Stable names for USB serial devices">
+  <meta name="twitter:description" content="Match a board once. Use the same alias in your scripts, terminal and firmware tools.">
+  <meta name="twitter:image" content="https://usbalias.com/assets/social-card.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "USBAlias",
+    "operatingSystem": "macOS 26.5 or later",
+    "applicationCategory": "DeveloperApplication",
+    "description": "A macOS menu bar utility that gives USB serial devices stable aliases.",
+    "url": "https://usbalias.com/",
+    "downloadUrl": "https://apps.apple.com/au/app/usbalias/id6785185032?mt=12",
+    "offers": {
+      "@type": "Offer",
+      "price": "19.99",
+      "priceCurrency": "AUD",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
 </head>
 <body>
-  <h1>USBAlias</h1>
-  <p>USBAlias is a macOS menu bar utility that gives USB serial devices stable
-     names, so scripts and firmware tools stop chasing changing
-     <code>/dev/cu.*</code> paths.</p>
-  <nav>
-    <a href="support.html">Support</a>
-    <a href="privacy.html">Privacy policy</a>
-  </nav>
-  <footer>Copyright 2026 Jared Reabow.</footer>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="site-shell site-header__inner">
+      <a class="brand" href="./" aria-label="USBAlias home">
+        <img src="assets/usbalias-icon.png" width="36" height="36" alt="">
+        <span>USBAlias</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a class="nav-section" href="#how-it-works">How it works</a>
+        <a class="nav-section" href="#use-cases">Use cases</a>
+        <a href="support.html">Support</a>
+        <a class="nav-download" href="https://apps.apple.com/au/app/usbalias/id6785185032?mt=12">Mac App Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="site-shell hero__inner">
+        <p class="hero__status"><span class="status-dot" aria-hidden="true"></span>Available now on the Mac App Store</p>
+        <h1 id="hero-title">Stop chasing <span>/dev/cu.*</span></h1>
+        <p class="hero__lede">USBAlias gives every board, radio and test rig a stable name on macOS. Match the device once, then use the same path in your terminal, scripts and firmware tools.</p>
+        <div class="hero__actions">
+          <a class="button" href="https://apps.apple.com/au/app/usbalias/id6785185032?mt=12">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.02-1.31-.58-2.45-.58-1.13 0-1.5.56-2.43.6-1.03.04-1.82-.99-2.55-2.16-1.45-2.34-2.1-4.18-1.95-6.03.15-1.93 1.61-3.35 3.34-3.48 1.01-.03 1.96.68 2.57.68.61 0 1.76-.84 2.96-.72.51.02 1.95.2 2.87 1.52-2.58 1.51-2.18 5.04.12 6.09-.51 1.47-1.23 2.89-2.48 4.08zM15.54 5.22c.49-.63.84-1.49.73-2.37-.79.04-1.72.53-2.24 1.13-.47.54-.87 1.42-.75 2.27.86.07 1.77-.43 2.26-1.03z"/></svg>
+            Download on the Mac App Store
+          </a>
+          <a class="button button--secondary" href="#how-it-works">See how it works</a>
+        </div>
+        <p class="hero__facts">
+          <span>macOS 26.5 or later</span>
+          <span>A$19.99 one-time purchase</span>
+          <span>No subscription</span>
+        </p>
+
+        <div class="path-card" aria-label="Example USB alias mapping">
+          <div>
+            <span class="path-card__label">Before</span>
+            <code>/dev/cu.usbmodemA4C8F...</code>
+          </div>
+          <span class="path-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+          <div class="path-card__result">
+            <span class="path-card__label">Every time</span>
+            <code>~/Aliases/ESP32_LAB</code>
+          </div>
+        </div>
+
+        <div class="hero__stage">
+          <figure class="app-window">
+            <img src="assets/rules.webp" width="2560" height="1600" alt="USBAlias Rules window showing stable aliases for JTAG, XIAO, Android, Quad Serial and ESP32 devices">
+          </figure>
+          <figcaption class="hero__caption">
+            <strong>Rules stay attached to the device, not the port.</strong>
+            <span>6 rules &middot; 6 connected</span>
+          </figcaption>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem" aria-labelledby="problem-title">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">The path problem</p>
+          <h2 id="problem-title">Your board did not change. Its macOS path did.</h2>
+          <p>A device can return as <code>/dev/cu.usbmodem101</code> one minute and something completely different the next. Cold starts, hubs, multiple boards and reconnects all shuffle the names.</p>
+        </div>
+
+        <div class="comparison" aria-label="Device paths without and with USBAlias">
+          <div class="comparison__column">
+            <p class="comparison__label">Without USBAlias</p>
+            <div class="code-stack">
+              <div><span>Today</span><code>/dev/cu.usbmodemA4C8F1</code></div>
+              <div><span>Reboot</span><code>/dev/cu.usbmodem101</code></div>
+              <div><span>Two boards</span><code>/dev/cu.usbmodem1101</code></div>
+              <div><span>Script</span><code>broken port, again</code></div>
+            </div>
+          </div>
+          <div class="comparison__column">
+            <p class="comparison__label">With USBAlias</p>
+            <div class="code-stack">
+              <div><span>Today</span><code>~/Aliases/ESP32_LAB</code></div>
+              <div><span>Reboot</span><code>~/Aliases/ESP32_LAB</code></div>
+              <div><span>Two boards</span><code>~/Aliases/RP2040_BENCH</code></div>
+              <div><span>Script</span><code>same path, every time</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface" id="how-it-works" aria-labelledby="workflow-title">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">Match once. Use anywhere.</p>
+          <h2 id="workflow-title">A tiny utility that fixes a very daily workflow.</h2>
+          <p>USBAlias watches your serial devices and maintains the symbolic link while it runs. There is no daemon to configure and no change to your existing firmware tooling.</p>
+        </div>
+
+        <div class="workflow">
+          <article class="workflow__step">
+            <span class="workflow__number">01 / CONNECT</span>
+            <div class="workflow__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg>
+            </div>
+            <h3>Plug the board in</h3>
+            <p>Choose it from the detected devices list. USBAlias captures its product, manufacturer and serial number.</p>
+          </article>
+          <article class="workflow__step">
+            <span class="workflow__number">02 / MATCH</span>
+            <div class="workflow__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8"/><path d="M12 8v8"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3>Name the rule</h3>
+            <p>Use a serial number for an exact match, or product and manufacturer when one alias should catch a class of boards.</p>
+          </article>
+          <article class="workflow__step">
+            <span class="workflow__number">03 / USE</span>
+            <div class="workflow__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 9-4 3 4 3"/><path d="m16 9 4 3-4 3"/><path d="m14 5-4 14"/></svg>
+            </div>
+            <h3>Keep your path</h3>
+            <p>Point the IDE, CLI or test harness at the alias. USBAlias repairs the link whenever the device comes back.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="use-cases" id="use-cases" aria-labelledby="use-cases-title">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">Made for real hardware work</p>
+          <h2 id="use-cases-title">From one board on a desk to a bench full of connected devices.</h2>
+          <p>Serial ports are infrastructure. They should stay stable while you focus on the firmware, test or experiment in front of you.</p>
+        </div>
+
+        <article class="use-case">
+          <div class="use-case__copy">
+            <p class="use-case__tag">Firmware and flash tools</p>
+            <h3>Flash the same target without rebuilding your command.</h3>
+            <p>Use the alias directly with ESP32, Arduino, RP2040 or custom flashing scripts. The board can be unplugged, reconnected or moved to another hub without changing the target path.</p>
+            <pre class="command-line"><span class="prompt">$</span> esptool.py --port <span class="path">~/Aliases/ESP32_LAB</span> chip_id
+<span class="prompt">$</span> arduino-cli upload -p <span class="path">~/Aliases/ESP32_LAB</span> .
+<span class="prompt">$</span> ./flash-bench.sh <span class="path">~/Aliases/RP2040_BENCH</span></pre>
+          </div>
+          <div class="use-case__visual">
+            <figure class="screenshot-frame">
+              <img src="assets/detected-devices.webp" width="2560" height="1600" loading="lazy" alt="USBAlias Detected Devices view showing linked boards and their current macOS device paths">
+              <figcaption class="screenshot-frame__caption">
+                <span>Detected Devices</span>
+                <span>linked &rarr; stable</span>
+              </figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="use-case use-case--reverse">
+          <div class="use-case__copy">
+            <p class="use-case__tag">Serial consoles</p>
+            <h3>One memorable path for every console session.</h3>
+            <p>Skip the port scan before every <code>screen</code>, <code>picocom</code> or monitor command. Give each radio, development board or controller a name that matches what is actually on your bench.</p>
+            <pre class="command-line"><span class="prompt">$</span> screen <span class="path">~/Aliases/RADIO_BENCH</span> 115200
+<span class="prompt">$</span> picocom -b 921600 <span class="path">~/Aliases/FLIGHT_LOG</span>
+<span class="prompt">$</span> python monitor.py <span class="path">~/Aliases/SENSOR_RIG</span></pre>
+          </div>
+          <div class="use-case__visual">
+            <figure class="screenshot-frame">
+              <img src="assets/general-settings.webp" width="2560" height="1600" loading="lazy" alt="USBAlias General settings with notifications, connect and disconnect sounds, auto-link and launch options">
+              <figcaption class="screenshot-frame__caption">
+                <span>Connect, disconnect and auto-link</span>
+                <span>configured once</span>
+              </figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="use-case">
+          <div class="use-case__copy">
+            <p class="use-case__tag">Multi-board test benches</p>
+            <h3>Keep every board separate, even when they look alike.</h3>
+            <p>Match on serial number so two identical development boards keep different aliases. When one disconnects, the others stay correct.</p>
+            <p>USBAlias shows the linked Mac port in the popup and list, so the current hardware path is always visible without opening Terminal.</p>
+          </div>
+          <div class="use-case__visual">
+            <div class="bench-diagram" role="img" aria-label="Three USB boards connected to separate stable aliases through changing macOS paths">
+              <div class="bench-diagram__row">
+                <div class="bench-diagram__device">
+                  <span class="bench-device-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="12" height="14" rx="2"/><path d="M9 9h6M9 13h6"/></svg>
+                  </span>
+                  <strong>ESP32 LAB</strong>
+                  <span>CP210x</span>
+                </div>
+                <span class="bench-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="bench-diagram__path">usbmodemA4C8</div>
+                <span class="bench-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="bench-diagram__alias">
+                  <strong>ESP32_LAB</strong>
+                  <span>linked</span>
+                </div>
+              </div>
+              <div class="bench-diagram__row">
+                <div class="bench-diagram__device">
+                  <span class="bench-device-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="12" height="14" rx="2"/><path d="M9 9h6M9 13h6"/></svg>
+                  </span>
+                  <strong>RP2040 BENCH</strong>
+                  <span>ACM</span>
+                </div>
+                <span class="bench-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="bench-diagram__path">usbmodem1101</div>
+                <span class="bench-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="bench-diagram__alias">
+                  <strong>RP2040_BENCH</strong>
+                  <span>linked</span>
+                </div>
+              </div>
+              <div class="bench-diagram__row">
+                <div class="bench-diagram__device">
+                  <span class="bench-device-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="5" width="12" height="14" rx="2"/><path d="M9 9h6M9 13h6"/></svg>
+                  </span>
+                  <strong>SENSOR RIG</strong>
+                  <span>FTDI</span>
+                </div>
+                <span class="bench-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="bench-diagram__path">usbserial-B002</div>
+                <span class="bench-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <div class="bench-diagram__alias">
+                  <strong>SENSOR_RIG</strong>
+                  <span>linked</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="features" aria-labelledby="features-title">
+      <div class="site-shell">
+        <div class="section-heading">
+          <p class="eyebrow">Small app. Useful details.</p>
+          <h2 id="features-title">Everything needed to keep a serial workflow sane.</h2>
+          <p>The useful parts are visible from the menu bar. The rest stays out of your way.</p>
+        </div>
+
+        <div class="feature-list">
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M7 7h10v5a5 5 0 0 1-10 0z"/><path d="M12 17v4"/></svg></span>
+            <div><h3>Match the device, not the port</h3><p>Product, manufacturer and serial number are all available for matching, with serial as the precise option.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg></span>
+            <div><h3>Choose your aliases folder</h3><p>Keep a clean set of stable links in a folder you choose, ready for every tool that accepts a device path.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-7M14 3v4M9 17H3M6 13v4"/><rect x="9" y="7" width="6" height="6" rx="1"/></svg></span>
+            <div><h3>Auto-link new devices</h3><p>Watch for new serial devices and create a rule from the product name when one appears.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h6"/></svg></span>
+            <div><h3>Live menu bar panel</h3><p>See each alias, its state and the current linked Mac port without opening the main window.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+            <div><h3>Copy the path you need</h3><p>Copy the alias or current hardware path directly from the app when a tool asks for one.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg></span>
+            <div><h3>Know when hardware changes</h3><p>Optional notifications and connect or disconnect sounds show the device name and linked port.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m8 9 2 2-2 2M13 15h3"/></svg></span>
+            <div><h3>See what happened</h3><p>A live activity log records connections, matches, link creation and the port behind each change.</p></div>
+          </article>
+          <article class="feature">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div><h3>No account. No ads.</h3><p>No sign-in and no tracking. Optional anonymous diagnostics are explained at first launch.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="privacy-band" aria-labelledby="privacy-title">
+      <div class="site-shell privacy-band__inner">
+        <div>
+          <h2 id="privacy-title">Your hardware names stay on your Mac.</h2>
+          <p>USBAlias does not need an account and does not open, read or write the serial device. Anonymous diagnostics are optional, clearly explained, and off unless you explicitly choose to share.</p>
+        </div>
+        <a class="link-arrow" href="privacy.html">
+          Read the privacy policy
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="buy-band" aria-labelledby="buy-title">
+      <div class="site-shell buy-band__inner">
+        <div class="buy-band__copy">
+          <p class="eyebrow">Available now</p>
+          <h2 id="buy-title">Give your serial devices names you can remember.</h2>
+          <p>One small Mac App Store purchase for every board, cable and test rig in your workflow. No subscription, no account and no server configuration.</p>
+        </div>
+        <div class="price-panel">
+          <span class="price-panel__label">Mac App Store price</span>
+          <strong>A$19.99</strong>
+          <p>One-time purchase. Australian storefront price shown; other regions may vary.</p>
+          <a class="button" href="https://apps.apple.com/au/app/usbalias/id6785185032?mt=12">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.02-1.31-.58-2.45-.58-1.13 0-1.5.56-2.43.6-1.03.04-1.82-.99-2.55-2.16-1.45-2.34-2.1-4.18-1.95-6.03.15-1.93 1.61-3.35 3.34-3.48 1.01-.03 1.96.68 2.57.68.61 0 1.76-.84 2.96-.72.51.02 1.95.2 2.87 1.52-2.58 1.51-2.18 5.04.12 6.09-.51 1.47-1.23 2.89-2.48 4.08zM15.54 5.22c.49-.63.84-1.49.73-2.37-.79.04-1.72.53-2.24 1.13-.47.54-.87 1.42-.75 2.27.86.07 1.77-.43 2.26-1.03z"/></svg>
+            View on the Mac App Store
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-band" aria-labelledby="faq-title">
+      <div class="site-shell faq-band__grid">
+        <div class="faq-band__intro">
+          <p class="eyebrow">Before you buy</p>
+          <h2 id="faq-title">A few practical answers.</h2>
+          <p>More setup and troubleshooting help is available on the <a href="support.html">support page</a>.</p>
+        </div>
+        <div>
+          <details>
+            <summary>Does USBAlias open my serial device?</summary>
+            <p>No. It asks macOS which serial devices are attached and creates a symbolic link to the current device path. It does not read or write the serial data itself.</p>
+          </details>
+          <details>
+            <summary>What happens when the device reconnects?</summary>
+            <p>USBAlias matches the newly connected device against your rules and updates its alias to point at the new <code>/dev/cu.*</code> path. Your tools keep using the same alias.</p>
+          </details>
+          <details>
+            <summary>Can I use more than one identical board?</summary>
+            <p>Yes. Match on serial number when two devices share the same product and manufacturer. That keeps each identical board attached to its own alias.</p>
+          </details>
+          <details>
+            <summary>Where are the aliases stored?</summary>
+            <p>In the aliases folder you choose. The App Store version is sandboxed, so it maintains those links inside a folder you grant it access to rather than writing to <code>/tmp</code>.</p>
+          </details>
+          <details>
+            <summary>Is there a subscription?</summary>
+            <p>No. USBAlias is a one-time Mac App Store purchase. The Australian storefront price is A$19.99; pricing in other regions is set by Apple's storefront pricing.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-shell site-footer__inner">
+      <a class="site-footer__brand" href="./">
+        <img src="assets/usbalias-icon.png" width="30" height="30" alt="">
+        <span>USBAlias</span>
+      </a>
+      <div class="site-footer__meta">
+        <div class="site-footer__links">
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="https://apps.apple.com/au/app/usbalias/id6785185032?mt=12">Mac App Store</a>
+        </div>
+        <div>&copy; 2026 Jared Reabow. Mac App Store is a service mark of Apple Inc.</div>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
