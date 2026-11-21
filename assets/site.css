@@ -342,6 +342,23 @@ summary:focus-visible {
   height: 17px;
 }
 
+.demo-video {
+  margin: 2rem auto 0;
+  max-width: 946px;
+}
+
+.demo-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.demo-video figcaption {
+  margin-top: .75rem;
+  font-size: .9rem;
+}
+
 .hero__stage {
   position: relative;
   width: min(1060px, calc(100% - 0.75rem));
